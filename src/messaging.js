@@ -7,12 +7,9 @@ async function selectUser(page, userNumber) {
   await page.keyboard.press('Enter')
 }
 
-async function typeMessage(page, messages) {
-  for (const message of messages) {
-    if (!message) {
-      continue
-    }
-
+async function typeMessage(page, messages, userName) {
+  for (let message of messages) {
+    message = await message.replace('$name', userName)
     await page.waitForSelector(SELECTORS.INPUT_MESSAGE_BOX)
     await page.type(SELECTORS.INPUT_MESSAGE_BOX, message)
 
@@ -28,12 +25,13 @@ async function typeMessage(page, messages) {
 const sendMessages = async (page, config) => {
   console.time(`Time spent in sending ${config.numbers.length} messages`)
 
-  for (const userNumber of config.numbers) {
-    if (!userNumber) {
+  for (const user of config.numbers) {
+    if (!user || user.includes('//')) {
       continue
     }
+    const [userName, userNumber, description] = await user.split(',')
     await selectUser(page, userNumber)
-    await typeMessage(page, config.message)
+    await typeMessage(page, config.message, userName)
   }
   console.timeEnd(`Time spent in sending ${config.numbers.length} messages`)
 }
