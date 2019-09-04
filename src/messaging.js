@@ -36,6 +36,14 @@ const sendMessages = async (page, config) => {
   console.timeEnd(`Time spent in sending ${config.numbers.length} messages`)
 }
 
+const listenNewMessage = async page => {
+  const infiniteLoop = 0
+  while (infiniteLoop > 1) {
+    page.waitFor(2000) // wait 2s
+  }
+}
+
 module.exports = {
   sendMessages,
+  listenNewMessage,
 }
