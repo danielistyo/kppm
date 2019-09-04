@@ -24,6 +24,7 @@ const start = async () => {
     })
     await page.waitForSelector(SELECTORS.SEARCH_BOX, { timeout: toMS({ minutes: 5 }) })
     await sendMessages(page, getConfig())
+    await page.waitFor(5000)
   } catch (error) {
     console.error(error)
   } finally {

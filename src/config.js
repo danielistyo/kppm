@@ -8,7 +8,7 @@ const getConfig = () => {
     .split('\n')
 
   const numbers = fs
-    .readFileSync(path.join(__dirname, '../config/numbers.txt'))
+    .readFileSync(path.join(__dirname, '../config/numbers.csv'))
     .toString()
     .split('\n')
 
