@@ -1,3 +1,5 @@
+require('dotenv').config()
+const { CHROME_PATH, PROFILE_CHROME_PATH } = process.env
 const puppeteer = require('puppeteer')
 const toMS = require('@sindresorhus/to-milliseconds')
 
@@ -11,8 +13,8 @@ const start = async () => {
     console.time('Time')
 
     browser = await puppeteer.launch({
-      executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-      userDataDir: '/Users/danielemanuel/Library/Application Support/Google/Chrome/Profile 2',
+      executablePath: CHROME_PATH,
+      userDataDir: PROFILE_CHROME_PATH,
       headless: false,
     })
 
