@@ -13,27 +13,39 @@ async function typeMessage(page, messages, userName) {
     await page.waitForSelector(SELECTORS.INPUT_MESSAGE_BOX)
     await page.type(SELECTORS.INPUT_MESSAGE_BOX, message)
 
+    // add new line when messages have multiple line
     if (messages.length > 1) {
       await page.keyboard.down('Shift')
       await page.keyboard.press('Enter')
       await page.keyboard.up('Shift')
     }
   }
+  // attach image
+  if (process.env.BROADCAST_IMAGE) {
+    // paste image
+    await page.keyboard.down('Control')
+    await page.keyboard.press('KeyV')
+    await page.keyboard.up('Control')
+    await page.waitForSelector(SELECTORS.IMAGE_SEND_BUTTON)
+  }
   await page.keyboard.press('Enter')
+  await page.waitFor(500)
 }
 
 const sendMessages = async (page, config) => {
-  console.time(`Time spent in sending ${config.numbers.length} messages`)
+  console.time(`Time spent in sending ${config.users.length} messages`)
 
-  for (const user of config.numbers) {
-    if (!user || user.includes('//')) {
+  for (const user of config.users) {
+    /* eslint-disable-next-line no-unused-vars */
+    const [active, userName, userNumber, description] = await user.split(',')
+    // // skip inactive user
+    if (!parseInt(active, 10) || active === 'Active') {
       continue
     }
-    const [userName, userNumber, description] = await user.split(',')
     await selectUser(page, userNumber)
     await typeMessage(page, config.message, userName)
   }
-  console.timeEnd(`Time spent in sending ${config.numbers.length} messages`)
+  console.timeEnd(`Time spent in sending ${config.users.length} messages`)
 }
 
 const listenNewMessage = async page => {

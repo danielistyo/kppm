@@ -7,13 +7,13 @@ const getConfig = () => {
     .toString()
     .split('\n')
 
-  const numbers = fs
-    .readFileSync(path.join(__dirname, '../config/numbers.csv'))
+  const users = fs
+    .readFileSync(path.join(__dirname, '../config/users.csv'))
     .toString()
     .split('\n')
 
   return {
-    numbers,
+    users,
     message,
   }
 }
