@@ -11,6 +11,6 @@
 
 ### Steps
 
-1. Add phone numbers in config/numbers.txt file (one number per line)
+1. Add phone numbers in config/users.txt file (one number per line)
 2. Add message in config/message.txt
 3. Run `npm start`
