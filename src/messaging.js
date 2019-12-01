@@ -5,6 +5,7 @@ async function selectUser(page, userNumber) {
   await page.waitFor(SELECTORS.SEARCH_BOX)
   await page.type(SELECTORS.SEARCH_BOX, userNumber)
   await page.keyboard.press('Enter')
+  await page.waitFor(500)
 }
 
 async function typeMessage(page, messages, userName) {
@@ -29,7 +30,7 @@ async function typeMessage(page, messages, userName) {
     await page.waitForSelector(SELECTORS.IMAGE_SEND_BUTTON)
   }
   await page.keyboard.press('Enter')
-  await page.waitFor(500)
+  // await page.waitFor(800)
 }
 
 const sendMessages = async (page, config) => {
