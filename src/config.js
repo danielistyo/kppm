@@ -2,10 +2,8 @@ const fs = require('fs')
 const path = require('path')
 
 const getConfig = () => {
-  const message = fs
-    .readFileSync(path.join(__dirname, '../config/message.txt'))
-    .toString()
-    .split('\n')
+  const message = fs.readFileSync(path.join(__dirname, '../config/message.txt')).toString()
+  // .split('\n')
 
   const users = fs
     .readFileSync(path.join(__dirname, '../config/users.csv'))
