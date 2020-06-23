@@ -48,14 +48,8 @@ const sendMessages = async (page, config) => {
   console.time(`Time spent in sending ${config.users.length} messages`)
 
   for (const user of config.users) {
-    /* eslint-disable-next-line no-unused-vars */
-    const [active, userName, userNumber, description] = await user.split(',')
-    // // skip inactive user
-    if (!parseInt(active, 10) || active === 'Active') {
-      continue
-    }
-    await selectUser(page, userNumber)
-    await typeMessage(page, config.message, userName)
+    await selectUser(page, user.number)
+    await typeMessage(page, config.message, user.name)
   }
   console.timeEnd(`Time spent in sending ${config.users.length} messages`)
 }

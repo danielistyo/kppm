@@ -1,14 +1,25 @@
 const fs = require('fs')
 const path = require('path')
+const Parse = require('parse/node')
 
-const getConfig = () => {
+Parse.serverURL = 'https://parseapi.back4app.com' // This is your Server URL
+Parse.initialize(process.env.APP_ID, process.env.JAVASCRIPT_KEY, process.env.MASTER_KEY)
+
+const getConfig = async () => {
   const message = fs.readFileSync(path.join(__dirname, '../config/message.txt')).toString()
-  // .split('\n')
 
-  const users = fs
-    .readFileSync(path.join(__dirname, '../config/users.csv'))
-    .toString()
-    .split('\n')
+  const recipients = Parse.Object.extend('recipients')
+  const query = new Parse.Query(recipients)
+  query.equalTo('active', true)
+  let users = []
+  try {
+    users = await (await query.find()).map(user => ({
+      number: user.get('number'),
+      name: user.get('name'),
+    }))
+  } catch (e) {
+    users = []
+  }
 
   return {
     users,
